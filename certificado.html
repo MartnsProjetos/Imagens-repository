@@ -33,18 +33,27 @@
         }
         
         header {
-            padding: 1.5rem 0;
+            padding: 0.8rem 0;
             text-align: center;
-            position: sticky;
+            position: fixed; /* Alterado de sticky para fixed */
             top: 0;
+            left: 0;
+            right: 0;
             backdrop-filter: blur(10px);
             background-color: rgba(10, 10, 10, 0.8);
             z-index: 100;
             border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+            transition: transform 0.3s ease; /* Adicionado para animação */
+            height: auto; /* Altura automática ao invés de fixa */
+        }
+        
+        /* Nova classe para esconder o header quando rolar para baixo */
+        header.hidden {
+            transform: translateY(-100%);
         }
         
         .logo {
-            font-size: 2.5rem;
+            font-size: 1.8rem; /* Diminuído de 2.5rem */
             font-weight: bold;
             letter-spacing: -1px;
             text-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
@@ -58,16 +67,16 @@
             display: flex;
             justify-content: center;
             gap: 2.5rem;
-            margin: 1.2rem 0 0.5rem;
+            margin: 0.6rem 0 0.2rem; /* Reduzido de 1.2rem 0 0.5rem */
         }
         
         nav a {
             color: var(--text);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem; /* Diminuído de 1.1rem */
             transition: all 0.3s;
             position: relative;
-            padding: 0.3rem 0;
+            padding: 0.2rem 0; /* Reduzido de 0.3rem */
         }
         
         nav a:hover {
@@ -93,6 +102,10 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
+        }
+        
+        main {
+            padding-top: 6rem; /* Adicionado para dar espaço ao header fixo */
         }
         
         .hero-section {
@@ -371,7 +384,7 @@
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <div class="logo">Martins<span>_dev</span></div>
         <nav>
             <a href="index.html">Início</a>
@@ -474,5 +487,25 @@
     <footer>
         <p>&copy; 2025 Matheus Martins. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        // Script para esconder o header ao rolar para baixo e mostrar ao rolar para cima
+        let lastScrollTop = 0;
+        const header = document.getElementById('header');
+        
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Rolando para baixo e já rolou mais de 100px
+                header.classList.add('hidden');
+            } else {
+                // Rolando para cima
+                header.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
 </body>
 </html>
